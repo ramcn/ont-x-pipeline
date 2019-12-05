@@ -8,9 +8,9 @@ def network(X, W):
     GlobalNormFlipFlop(size, nbase)
 
 def GruModFwd(X, W, istate):
-    for (i=0;i<N;i++):
-       GruModStep()
+    for (i=0;i<N;i=i+1):
+       GruModStep(X, W, istate, ostate)
 
 def GruModBck(X, W, istate):
-    for (i=N;i>0;i--):
-       GruModStep()
+    for (i=N;i>0;i=i-1):
+       GruModStep(X, Y, istate, ostate)
