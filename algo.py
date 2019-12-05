@@ -13,4 +13,16 @@ def GruModFwd(X, W, istate):
 
 def GruModBck(X, W, istate):
     for (i=N;i>0;i=i-1):
-       GruModStep(X, Y, istate, ostate)
+       GruModStep(X, W, istate, ostate)
+
+def GruModStep(Cin, Cout, A, Bnext):
+        Cout = Cin
+        cblas_sgemv(CblasColMajor, CblasTrans, 768, 256, 1.0, A, B, 1, 1.0, Cout, 1)
+
+        for (size_t i = 0; i < 256; i++):
+           Cout[i] = LOGISTICF(Cout[i]) // Update gate u(t) 
+           Cout[size+i] = LOGISTICF(Cout[size+i]) // RESET gate r(t)
+           Cout[i+size+size] = TANHF(Cout[i+size] * Cout[i+size+size] + Cin[i+size+size]) // ~O(t)
+           Bnext[i] = (-1) * Cout[i] * Cout[i+size+size] + Cout[i+size+size]  // O(t) part 2
+           Bnext[i] = Cout[i] * B[i] + Bnext[i]  // O(t) part 1
+
