@@ -19,7 +19,7 @@ def GruModStep(Cin, Cout, A, Bnext):
         Cout = Cin
         cblas_sgemv(CblasColMajor, CblasTrans, 768, 256, 1.0, A, B, 1, 1.0, Cout, 1)
 
-        for (size_t i = 0; i < 256; i++):
+        for ( i = 0; i < 256; i = i+1):
            Cout[i] = LOGISTICF(Cout[i]) // Update gate u(t) 
            Cout[size+i] = LOGISTICF(Cout[size+i]) // RESET gate r(t)
            Cout[i+size+size] = TANHF(Cout[i+size] * Cout[i+size+size] + Cin[i+size+size]) // ~O(t)
