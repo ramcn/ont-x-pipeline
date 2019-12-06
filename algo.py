@@ -1,11 +1,15 @@
-def network(X, W):
-    istate = Convolution(X, W, winlen, fun=tanh)
+def Network(X, W):
+    istate = Convolution(X, W)
     ostate1 = GruModBck(X, W, istate)
-    ostate2 = GruModFwd(X, W, ostate1)
-    ostate3 = GruModBck(X, W, ostate2)
-    ostate4 = GruModFwd(X, W, ostate3)
-    ostate5 = GruModBck(X, W, ostate4)
-    GlobalNormFlipFlop(size, nbase)
+    X1 = feedforward_linear(X,ostate1)
+    ostate2 = GruModFwd(X1, W, ostate1)
+    X2 = feedforward_linear(X1,ostate2)
+    ostate3 = GruModBck(X2, W, ostate2)
+    X3 = feedforward_linear(X2,ostate3)
+    ostate4 = GruModFwd(X3, W, ostate3)
+    X4 = feedforward_linear(X3,ostate4)
+    ostate5 = GruModBck(X4, W, ostate4)
+    trans = GlobalNormFlipFlop(ostate5)
 
 def GruModFwd(X, W, istate):
     for (i=0;i<N;i=i+1):
